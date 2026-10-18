@@ -1,0 +1,132 @@
+/* One Dungeon After Another, as the game's title menu draws it (grimhollow-godot scripts/ui/main_menu.gd):
+   the SMOKE ground, the wordmark in Alegreya SC Bold parchment with the second line between gold diamonds
+   and rules, menu-style headings, and the amber CRT tokens (brand doc 15 s C14a) for the accents.
+   Fonts are the game's own, self-hosted under the SIL OFL. Nothing is loaded from other websites. */
+
+@font-face { font-family: "Alegreya SC"; src: url("fonts/AlegreyaSC-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Alegreya"; src: url("fonts/Alegreya-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Alegreya"; src: url("fonts/Alegreya-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Press Start 2P"; src: url("fonts/PressStart2P-Regular.ttf") format("truetype"); font-display: swap; }
+
+:root {
+  --smoke: #171310;      /* SMOKE: the title's ground */
+  --parchment: #E8DCC0;  /* PARCHMENT: the wordmark and the menu */
+  --gold: #C8922F;       /* TORCH_GOLD: the diamonds */
+  --low: #683201;        /* AMBER_LOW: the rules, keylines at rest */
+  --mid: #BC6402;        /* AMBER_MID */
+  --lit: #E38B03;        /* AMBER_LIT */
+  --hot: #F4B40A;        /* AMBER_HOT: the one focused thing */
+}
+
+* { box-sizing: border-box; }
+html { background: var(--smoke); }
+body {
+  margin: 0;
+  background: var(--smoke);
+  color: var(--parchment);
+  font-family: "Alegreya", Georgia, serif;
+  font-size: 1.15rem;
+  line-height: 1.55;
+  overflow-x: hidden;
+}
+
+/* ---- the hero: the wordmark in the dark to the left, the gateway to the right (the title menu's composition) */
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.5fr);
+  align-items: center;
+  gap: 8px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 16px 24px;
+}
+.hero-text { position: relative; z-index: 2; padding-left: clamp(0px, 4vw, 72px); }
+
+.wordmark {
+  display: inline-block;
+  margin: 0;
+  font-family: "Alegreya SC", Georgia, serif;
+  font-weight: 700;
+  color: var(--parchment);
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+.wordmark .line1 { display: block; font-size: clamp(2.2rem, 3.9vw, 4rem); letter-spacing: 0.015em; white-space: nowrap; }
+.wordmark .line2 {
+  display: flex;
+  align-items: center;
+  gap: 0.38em;
+  margin-top: 0.26em;
+  font-size: clamp(1.31rem, 2.33vw, 2.39rem);   /* 37 / 62 of line 1, as the game sets it */
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+.wordmark .rule { flex: 1 1 0; height: 1.5px; min-width: 10px; background: var(--low); }
+.wordmark .dia { flex: none; width: 0.26em; height: 0.26em; background: var(--gold); transform: rotate(45deg); }
+
+.tag { font-size: clamp(1.15rem, 1.8vw, 1.4rem); margin: 26px 0 0; max-width: 26em; }
+.cta { margin: 26px 0 8px; }
+.chip {
+  display: inline-block;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.7rem;
+  line-height: 1.6;
+  padding: 10px 14px;
+  border: 2px solid var(--lit);
+  color: var(--lit);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.when { font-family: "Press Start 2P", monospace; font-size: 0.62rem; color: var(--mid); letter-spacing: 0.04em; margin: 10px 0 0; }
+
+.gateway { position: relative; z-index: 1; width: 100%; }
+.gateway canvas { display: none; width: 100%; }
+.gateway .gateway-still { display: block; width: 74%; margin: 0 auto; height: auto; }
+.gateway.live canvas { display: block; }
+.gateway.live .gateway-still { display: none; }
+#gateway-embers { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 3; }
+
+/* ---- the rest of the page, in the menu's voice: Alegreya SC parchment headings with a gold diamond */
+main { max-width: 980px; margin: 0 auto; padding: 8px 16px 40px; }
+.pitch { max-width: 40em; margin: 20px auto 40px; text-align: center; font-size: 1.25rem; }
+
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.features article { border: 1.5px solid var(--low); padding: 18px 20px; }
+h2 {
+  font-family: "Alegreya SC", Georgia, serif;
+  font-weight: 700;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: var(--parchment);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0 0 8px;
+}
+.features h2::before {
+  content: "";
+  display: inline-block;
+  width: 0.34em; height: 0.34em;
+  margin: 0 0.45em 0.14em 0;
+  background: var(--lit);
+  transform: rotate(45deg);
+  vertical-align: middle;
+}
+.features p { margin: 0; }
+
+.news { text-align: center; margin: 48px auto 0; }
+.news p { margin: 0; }
+
+footer { border-top: 1.5px solid var(--low); text-align: center; padding: 22px 16px 34px; }
+footer p { margin: 4px 0; }
+footer .small { font-size: 0.9rem; color: #d3c4a2; }
+a { color: var(--hot); }
+
+/* ---- phones: the wordmark first, then the gateway */
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; padding-top: 28px; text-align: center; }
+  .hero-text { padding-left: 0; }
+  .tag { margin-left: auto; margin-right: auto; }
+  .wordmark .line1 { font-size: clamp(2.2rem, 10.5vw, 4rem); }
+  .wordmark .line2 { font-size: clamp(1.31rem, 6.27vw, 2.39rem); }
+}
